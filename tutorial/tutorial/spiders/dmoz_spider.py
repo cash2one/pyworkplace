@@ -1,8 +1,7 @@
 from scrapy.spider import BaseSpider
-
-
+from scrapy.selector import HtmlXPathSelector
 from tutorial.items import DmozItem
-
+ 
 class DmozSpider(BaseSpider):
    name = "dmoz"
    allowed_domains = ["dmoz.org"]
@@ -31,3 +30,4 @@ class DmozSpider(BaseSpider):
             item['link'] = sel.xpath('a/@href').extract()
             item['desc'] = sel.xpath('text()').extract()
             yield item
+
