@@ -1,7 +1,7 @@
 __author__ = 'cfy'
 
 # from scrapy.spider import BaseSpider
-from mininova_spider.items import TorrentItem
+from mininova.items import TorrentItem
 
 from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors import LinkExtractor
