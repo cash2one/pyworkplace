@@ -37,8 +37,6 @@ class MySQLStorePipeline(object):
     def handle_error(self, e):
         log.err(e)
 
-
-
     #将每行写入数据库中
     def _conditional_insert(self, tx, item):
         if item.get('title'):
