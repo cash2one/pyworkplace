@@ -20,9 +20,9 @@ import errno
 class MySQLStorePipeline(object):
     def __init__(self):
         self.dbpool = adbapi.ConnectionPool('MySQLdb',
-            db = 'test',
-            user = 'root',
-            passwd = '000000',
+            db = '5582eaede1ecf.gz.cdb.myqcloud.com:8295',
+            user = 'cdb_outerroot',
+            passwd = '24203cjy',
             cursorclass = MySQLdb.cursors.DictCursor,
             charset = 'utf8',
             use_unicode = False
