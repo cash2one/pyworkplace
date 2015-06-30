@@ -20,9 +20,16 @@ import errno
 class MySQLStorePipeline(object):
     def __init__(self):
         self.dbpool = adbapi.ConnectionPool('MySQLdb',
-            db = '5582eaede1ecf.gz.cdb.myqcloud.com:8295',
+            host = '5582eaede1ecf.gz.cdb.myqcloud.com',
+            db = 'test',
             user = 'cdb_outerroot',
             passwd = '24203cjy',
+            port =8295,
+            
+            # db = 'test',
+            # user = 'root',
+            # passwd = 'root',
+            
             cursorclass = MySQLdb.cursors.DictCursor,
             charset = 'utf8',
             use_unicode = False
@@ -41,8 +48,7 @@ class MySQLStorePipeline(object):
     def _conditional_insert(self, tx, item):
         if item.get('title'):
             for i in range(len(item['title'])):
-                # tx.execute('insert into book values (%s, %s)', (item['title'][i], item['link'][i]))
-
+                
                 tx.execute("select * from book where title = %s", (item['title'][i], ))
                 result = tx.fetchone()
                 if result:
