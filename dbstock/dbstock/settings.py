@@ -12,6 +12,7 @@ BOT_NAME = 'dbstock'
 
 SPIDER_MODULES = ['dbstock.spiders']
 NEWSPIDER_MODULE = 'dbstock.spiders'
+ITEM_PIPELINES = ['dbstock.pipelines.MySQLStorePipeline']
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'dbstock (+http://www.yourdomain.com)'
