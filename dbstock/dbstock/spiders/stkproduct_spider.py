@@ -8,15 +8,16 @@ class product(BaseSpider):
    name = "stkproduct"
    allowed_domains = ["gu.qq.com"]
    start_urls = ["http://gu.qq.com/sz000100"]
-
+   #start_urls = ["http://book.douban.com/tag/编程?type=S"]
 
    def parse(self, response):
       hxs = HtmlXPathSelector(response)
+      
       item = productItem()
      
       item['CUNTRYCD'] = '10' # '国家代码    
       item['STKCODE'] = '000100'   # '证券代码',
-      item['STKNAME'] = hxs.select('id(''mod-hqpanel'')/x:div[1]/x:div[1]/x:h1[1]').extract()
+      item['STKNAME'] = hxs.select('//html/body/div[3]/div/div/ul/li[1]/a').extract()
       item['CONAME'] = ''  #'公司名称',
       item['INDCODE'] = ''  # '行业代码A',
       item['INDNAME'] = ''  # '行业名称A',
@@ -30,8 +31,5 @@ class product(BaseSpider):
       item['SCTCODE'] = ''  # '区域码 1=上海，2=深圳',
       item['STATCO'] = ''  # '公司活动情况  
       item['MARKETTPPE'] = ''  # '市场类型       
-    
-    
-      print '---------------------------------------------' + item['STKNAME']
-      yield item
+      return item
       
