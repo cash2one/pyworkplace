@@ -12,12 +12,12 @@ class product(BaseSpider):
 
    def parse(self, response):
       hxs = HtmlXPathSelector(response)
-      
+      items = []
       item = productItem()
      
       item['CUNTRYCD'] = '10' # '国家代码    
       item['STKCODE'] = '000100'   # '证券代码',
-      item['STKNAME'] = hxs.select('//html/body/div[3]/div/div/ul/li[1]/a').extract()
+      item['STKNAME'] = hxs.select('//div[1]/div/ul/li[1]/a/text()').extract()
       item['CONAME'] = ''  #'公司名称',
       item['INDCODE'] = ''  # '行业代码A',
       item['INDNAME'] = ''  # '行业名称A',
@@ -30,6 +30,7 @@ class product(BaseSpider):
       item['NSHRIPO'] = ''  # '发行数量',
       item['SCTCODE'] = ''  # '区域码 1=上海，2=深圳',
       item['STATCO'] = ''  # '公司活动情况  
-      item['MARKETTPPE'] = ''  # '市场类型       
-      return item
+      item['MARKETTPPE'] = ''  # '市场类型      
+      items.append(item)
+      return items
       
