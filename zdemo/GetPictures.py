@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 import urllib
 import re
 import os
@@ -16,7 +16,7 @@ def getImg(html):
     for imgurl in imglist:
         local = os.path.join('/home/ubuntu/workspace/pictures','%s.jpg' % x)
         urllib.urlretrieve(imgurl,local)
-        x+=1
+        x += 1
 
 
 html = getHtml("http://tieba.baidu.com/p/2460150866")
