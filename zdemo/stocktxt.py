@@ -14,8 +14,13 @@ while line:
     line = myFile.readline()
 myFile.close()
 
-print allWords[0].decode("gbk").encode("utf-8") + allWords[1].decode("gbk").encode("utf-8")
-# print allWords[0] + allWords[1]
-# print allWords[2].decode("gbk").encode("utf-8")
-# print allWords[3].decode("gbk").encode("utf-8")
-# print allWords[4].decode("gbk").encode("utf-8")
+#去掉前两行
+allvalue =allWords[2:len(allWords)]
+
+# print allvalue[3].decode("gbk").encode("utf-8") 
+# values = allWords[2].decode("gbk").encode("utf-8")
+
+# print allvalue
+#把一行通过 Tab分割
+values=allvalue[0].split('\t')
+print values
