@@ -23,4 +23,4 @@ allvalue =allWords[2:len(allWords)]
 # print allvalue
 #把一行通过 Tab分割
 values=allvalue[0].split('\t')
-print values
+print values[1].decode("gbk").encode("utf-8")
