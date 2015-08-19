@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.4
 # -*- coding: utf-8 -*-
 import MySQLdb
+import time
 
 myFile = open('Table.txt', 'r')
 allWords = []
@@ -16,18 +17,17 @@ while line:
 myFile.close()
 
 #去掉前两行
-allvalue =allWords[2:len(allWords)]
+allValue =allWords[2:len(allWords)]
 
-# print allvalue[3].decode("gbk").encode("utf-8") 
+# print allValue[3].decode("gbk").encode("utf-8")
 # values = allWords[2].decode("gbk").encode("utf-8")
 
-# print allvalue
+# print allValue
 #把一行通过 Tab分割
-values=allvalue[0].split('\t')
-print values[1].decode("gbk").encode("utf-8")
- 
- 
- 
+values=allValue[0].split('\t')
+# print values[1].decode("gbk").encode("utf-8")
+print values
+
 try:
     conn=MySQLdb.connect(host='203.195.179.183',user='cdb_outerroot',passwd='24203cjy',port=8295,db='test',charset='utf8')
     cur=conn.cursor()
@@ -50,9 +50,17 @@ try:
     # value=[10,'SZ',00001,'TEST','公司','行业代码A','行业名称A',20150818,20150818,1,'货币',10,'区域','状态']
     value=[10,
            values[0][0:2],
-           values[0][2:6],
+           values[0][2:8],
            values[1].decode("gbk").encode("utf-8"),
-           '公司','行业代码A','行业名称A',20150818,20150818,1,'货币',10,'区域','状态']
+           '公司','行业代码A','行业名称A',
+           '20'+time.strftime("%y%m%d"),
+           '20'+time.strftime("%y%m%d"),
+           1, #发布价格
+           'RMB',#货币
+           10, #数量
+           '区域', # 区域
+           '1']  #状态
+    # print value
     sql='''INSERT INTO STKPRODUCT (CUNTRYCD, MARKETTPPE, STKCODE , STKNAME , 
                         CONAME, INDCODE , INDNAME , ESTBDATE, LISTDATE, IPOPRC, 
                         IPOCUR  , NSHRIPO , SCTCODE , STATCO )
@@ -61,10 +69,10 @@ try:
    
     cur.execute (sql ,value)
     
-    #插入交易表
-    value=['00001',   # STKCODE      varchar(12)
-            'SZ',      # MARKETTYPE   varchar(2) '市场类型'   
-            20150818,  # TRDDATE      int(8) NOT NULL COMMENT '交易日期' ,
+    #插入交易表  values[1].decode("gbk").encode("utf-8"),
+    value=[values[0][2:8],   # STKCODE      varchar(12)
+           values[0][0:2],      # MARKETTYPE   varchar(2) '市场类型'
+            '20'+time.strftime("%y%m%d"),  # TRDDATE      int(8) NOT NULL COMMENT '交易日期' ,
             1.1,       # PRECLSPRC    varchar(255)  '昨日收盘价' ,
             1111.1000,  # OPNPRC DECIMAL (4, 4) NULL DEFAULT NULL COMMENT '日开盘价',
             1.2,       # HIPRC DECIMAL (4, 4) NULL DEFAULT NULL COMMENT '日最高价',
@@ -80,14 +88,14 @@ try:
             66,    #  PB           decimal(4,2) NULL DEFAULT NULL COMMENT '市净率' ,
             77,    # BUYVOL       decimal(10,0) NULL DEFAULT NULL COMMENT '外盘量' ,
             88,    # SELLVOL      decimal(10,0) NULL DEFAULT NULL COMMENT '内盘量' ,
-            '1'   # TRDSTA       varchar(2)  '交易状态   
+            '1'   # TRDSTA       varchar(2)  '交易状态
          ]
-    sql = '''INSERT INTO STKTRADE (STKCODE, MARKETTYPE, TRDDATE, PRECLSPRC, 
-                    OPNPRC, HIPRC, LOPRC, CLSPRC, ADV, ADR, VOL, AMOUNT, 
+    sql = '''INSERT INTO STKTRADE (STKCODE, MARKETTYPE, TRDDATE, PRECLSPRC,
+                    OPNPRC, HIPRC, LOPRC, CLSPRC, ADV, ADR, VOL, AMOUNT,
                     CAPITAL, CAPTOTAL, PE, PB, BUYVOL, SELLVOL, TRDSTA )
                 VALUE
-                  (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s )'''  
-	
+                  (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s )'''
+
     cur.execute (sql,value)
     conn.commit()
     cur.close()
