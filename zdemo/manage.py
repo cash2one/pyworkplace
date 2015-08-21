@@ -32,7 +32,9 @@ for j in range(len(allValue)):
       if len(values)<10:
           continue 
       try:
-        conn=MySQLdb.connect(host='203.195.179.183',user='cdb_outerroot',passwd='24203cjy',port=8295,db='test',charset='utf8')
+
+        # conn=MySQLdb.connect(host='203.195.179.183',user='cdb_outerroot',passwd='24203cjy',port=8295,db='test',charset='utf8')
+        conn=MySQLdb.connect(host='127.0.0.1',user='root',passwd='24203cjy',port=3306,db='test',charset='utf8')
         cur=conn.cursor()
         # cur.execute('create database if not exists test')
         # conn.select_db('test')
