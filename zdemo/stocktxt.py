@@ -3,6 +3,7 @@ import xdrlib, sys
 import xlrd
 import MySQLdb
 import time
+# import sys
 
 
 def open_excel(file='Table1.xls'):
@@ -63,6 +64,14 @@ def excel_table_byname(file='Table1.xls', colnameindex=0, by_name=u'sql'):
 if __name__ == "__main__":
     tables = excel_table_byindex()
     rn=0
+    #处理传入进来的日期
+    if  len(sys.argv) == 1:
+        skDate ='20' + time.strftime("%y%m%d")
+    else:
+        skDate =sys.argv[1]
+
+
+    print skDate
     for row in tables:
         rn += 1
         values = row
@@ -117,7 +126,7 @@ if __name__ == "__main__":
             stockCode = values[u'代码']
             value=[values[u'代码'][2:8],   # STKCODE      varchar(12)
                     values[u'代码'][0:2],      # MARKETTYPE   varchar(2) '市场类型'
-                    '20'+time.strftime("%y%m%d"),  # TRDDATE      int(8) NOT NULL COMMENT '交易日期' ,
+                    skDate,  # TRDDATE      int(8) NOT NULL COMMENT '交易日期' ,
                     values[u'昨收'],       # PRECLSPRC    varchar(255)  '昨日收盘价' ,
                     iif(status == 2,0,values[u'开盘']),  # OPNPRC DECIMAL (4, 4) NULL DEFAULT NULL COMMENT '日开盘价',
                     iif(status == 2,0,values[u'最高']),       # HIPRC DECIMAL (4, 4) NULL DEFAULT NULL COMMENT '日最高价',
@@ -148,5 +157,5 @@ if __name__ == "__main__":
 
 
         except MySQLdb.Error, e:
-            print "执行成功 共" +'%d' %len(tables) +'条 现在执行第 '+ '%d' %rn +'条！'
             print "Mysql Error %d: %s" % (e.args[0], e.args[1])
+    print "执行成功 共" +'%d' %len(tables) +'条 现在执行第 '+ '%d' %rn +'条！'
