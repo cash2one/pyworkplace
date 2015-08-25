@@ -20,9 +20,9 @@ import errno
 class MySQLStorePipeline(object):
     def __init__(self):
         self.dbpool = adbapi.ConnectionPool('MySQLdb',
-            host = '5582eaede1ecf.gz.cdb.myqcloud.com',
+            host = '127.0.0.1',
             db = 'test',
-            user = 'cdb_outerroot',
+            user = 'root',
             passwd = '24203cjy',
             port =8295,
             

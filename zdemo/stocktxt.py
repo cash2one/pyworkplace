@@ -144,13 +144,20 @@ if __name__ == "__main__":
                     iif(values[u'市净率'] == '--',0,values[u'市净率']),    #  PB           decimal(4,2) NULL DEFAULT NULL COMMENT '市净率' ,
                     iif(values[u'外盘'] == '--',0,values[u'外盘']),    # BUYVOL       decimal(10,0) NULL DEFAULT NULL COMMENT '外盘量' ,
                     iif(values[u'内盘'] == '--',0,values[u'内盘']),    # SELLVOL      decimal(10,0) NULL DEFAULT NULL COMMENT '内盘量' ,
-                    status   # TRDSTA       varchar(2)  '交易状态
+                    status,   # TRDSTA       varchar(2)  '交易状态
+                    iif(status == 1,0,values[u'主力净量']), #主力净值
+                    iif(status == 1,0,values[u'换手%']), #
+                    iif(status == 1,0,values[u'量比']), #
+                    iif(status == 1,0,values[u'均笔额']), #
+                    iif(status == 1,0,values[u'笔数']), #
+                    iif(status == 1,0,values[u'手/笔'])  #
                 ]
             sql = '''INSERT INTO STKTRADE (STKCODE, MARKETTYPE, TRDDATE, PRECLSPRC,
                             OPNPRC, HIPRC, LOPRC, CLSPRC, ADV, ADR, VOL, AMOUNT,
-                            CAPITAL, CAPTOTAL, PE, PB, BUYVOL, SELLVOL, TRDSTA )
+                            CAPITAL, CAPTOTAL, PE, PB, BUYVOL, SELLVOL, TRDSTA,
+                             NETAMOUNT,TURNOVER,LB,JBE,BCOUNT,SB)
                         VALUE
-                          (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s )'''
+                          (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s )'''
 
             cur.execute('delete from STKTRADE where STKCODE=\''+values[u'代码'][2:8]+'\''+' and TRDDATE='+skDate)
             cur.execute (sql,value)
