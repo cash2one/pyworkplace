@@ -18,7 +18,7 @@ def iif(condition, true_part, false_part):
 
 
 # 根据索引获取Excel表格中的数据   参数:file：Excel文件路径     colnameindex：表头列名所在行的所以  ，by_index：表的索引
-def excel_table_byindex(file='Table1.xls', colnameindex=0, by_index=0):
+def excel_table_byindex(file='Table.xls', colnameindex=0, by_index=0):
     data = open_excel(file)
     table = data.sheets()[by_index]
     nrows = table.nrows  # 行数
@@ -52,15 +52,17 @@ def excel_table_byname(file='Table1.xls', colnameindex=0, by_name=u'sql'):
             list.append(app)
     return list
 
-
-def main():
-    tables = excel_table_byindex()
-    for row in tables:
-        print row[u'涨幅%']
+#
+# def main():
+#     tables = excel_table_byindex()
+#     for row in tables:
+#         print row[u'涨幅%']
 
 
 # tables = excel_table_byname()
 # for row in tables:
 #     print row
 if __name__ == "__main__":
-    main()
+    tables = excel_table_byindex('Table.xls')
+    for row in tables:
+        print row[u'涨幅%']

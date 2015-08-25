@@ -62,13 +62,15 @@ def excel_table_byname(file='Table1.xls', colnameindex=0, by_name=u'sql'):
 #   for row in tables:
 #       print row
 if __name__ == "__main__":
-    tables = excel_table_byindex()
-    rn=0
-    #处理传入进来的日期
+        #处理传入进来的日期
     if  len(sys.argv) == 1:
         skDate ='20' + time.strftime("%y%m%d")
     else:
         skDate =sys.argv[1]
+
+    tables = excel_table_byindex('Table'+skDate+'.xls')
+    rn=0
+
 
 
     print skDate
@@ -128,12 +130,12 @@ if __name__ == "__main__":
                     values[u'代码'][0:2],      # MARKETTYPE   varchar(2) '市场类型'
                     skDate,  # TRDDATE      int(8) NOT NULL COMMENT '交易日期' ,
                     values[u'昨收'],       # PRECLSPRC    varchar(255)  '昨日收盘价' ,
-                    iif(status == 2,0,values[u'开盘']),  # OPNPRC DECIMAL (4, 4) NULL DEFAULT NULL COMMENT '日开盘价',
-                    iif(status == 2,0,values[u'最高']),       # HIPRC DECIMAL (4, 4) NULL DEFAULT NULL COMMENT '日最高价',
-                    iif(status == 2,0,values[u'最低']),         # LOPRC        decimal(4,4) NULL DEFAULT NULL COMMENT '日最低价' ,
-                    iif(status == 2,0,values[u'现价']),    # CLSPRC       decimal(4,4) NULL DEFAULT NULL COMMENT '日收盘价' ,
-                    iif(status == 2,0,values[u'涨跌']),    # ADV DECIMAL (4, 4) NULL DEFAULT NULL COMMENT '涨跌值',
-                    iif(status == 2,0,values[u'涨幅%']),    # ADR          decimal(4,4) NULL DEFAULT NULL COMMENT '涨跌率 * 100' ,
+                    iif(status == 1,0,values[u'开盘']),  # OPNPRC DECIMAL (4, 4) NULL DEFAULT NULL COMMENT '日开盘价',
+                    iif(status == 1,0,values[u'最高']),       # HIPRC DECIMAL (4, 4) NULL DEFAULT NULL COMMENT '日最高价',
+                    iif(status == 1,0,values[u'最低']),         # LOPRC        decimal(4,4) NULL DEFAULT NULL COMMENT '日最低价' ,
+                    iif(status == 1,0,values[u'现价']),    # CLSPRC       decimal(4,4) NULL DEFAULT NULL COMMENT '日收盘价' ,
+                    iif(status == 1,0,values[u'涨跌']),    # ADV DECIMAL (4, 4) NULL DEFAULT NULL COMMENT '涨跌值',
+                    iif(status == 1,0,values[u'涨幅%']),    # ADR          decimal(4,4) NULL DEFAULT NULL COMMENT '涨跌率 * 100' ,
                     iif(values[u'总手'] == '--',0,values[u'总手']),    # VOL DECIMAL (20, 0) NULL DEFAULT NULL COMMENT '日个股交易股数 成交量',
                     values[u'总金额'],    # AMOUNT       varchar(20) '日成交额' ,
                     iif(values[u'流通市值'] == '--',0,values[u'流通市值']),    # CAPITAL VARCHAR (20) '流通市值',
@@ -149,7 +151,8 @@ if __name__ == "__main__":
                             CAPITAL, CAPTOTAL, PE, PB, BUYVOL, SELLVOL, TRDSTA )
                         VALUE
                           (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s )'''
-            cur.execute('delete from STKTRADE where STKCODE=\''+values[u'代码'][2:8]+'\''+' and TRDDATE='+'20'+time.strftime("%y%m%d"))
+
+            cur.execute('delete from STKTRADE where STKCODE=\''+values[u'代码'][2:8]+'\''+' and TRDDATE='+skDate)
             cur.execute (sql,value)
             conn.commit()
             cur.close()
