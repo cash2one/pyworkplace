@@ -24,7 +24,7 @@ class MySQLStorePipeline(object):
             db = 'test',
             user = 'root',
             passwd = '24203cjy',
-            port =8295,
+            port =3306,
             
             # db = 'test',
             # user = 'root',
