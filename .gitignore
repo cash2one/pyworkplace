@@ -1,3 +1,5 @@
 *.pyc
 .idea
 caches
+zdemo/test.py
+zdemo/*.xls

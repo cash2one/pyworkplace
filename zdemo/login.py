@@ -11,7 +11,8 @@ def renrenBrower(url,user,password):
         #cookieJar作为参数，获得一个opener的实例
         opener=urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
         #伪装成一个正常的浏览器，避免有些web服务器拒绝访问。
-        opener.addheaders = [('User-agent','Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)')]
+        opener.addheaders = [('User-agent', 'Mozilla/5.0 (compatible; MSIE 6.0; Windows NT 6.3)')]
+
         #生成Post数据，含有登陆用户名密码。
         data = urllib.urlencode({"email":user,"password":password})
         #以post的方法访问登陆页面，访问之后cookieJar会自定保存cookie
@@ -22,6 +23,7 @@ def renrenBrower(url,user,password):
         data= op.read()
         return data
     except Exception,e:
-        print str(e)
+        # decode("gbk").encode("utf-8")
+        print str(e).decode("utf-8").encode("gbk")
 #访问某用户的个人主页，其实这已经实现了人人网的签到功能。
 print renrenBrower("http://www.renren.com/home","124532043@qq.com","000000")

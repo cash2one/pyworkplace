@@ -19,6 +19,20 @@ def main(filename):
         result =result + '\r' +line[pos:]
     reader.close()
     return result
- 
+
+
+# myFile = open('Table.txt', 'r')
+# allWords = []
+# line = myFile.readline()
+# while line:
+#     getList = line.split('    ')
+#     for word in getList:
+#         if word[-1] == '\n':
+#             allWords.append(word[:-1])  # 去掉行末的'\n'
+#         else:
+#             allWords.append(word)
+#     line = myFile.readline()
+# myFile.close()
+
 if __name__ == '__main__':
      print main('wf.txt')

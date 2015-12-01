@@ -17,7 +17,7 @@ class product(BaseSpider):
      
       item['CUNTRYCD'] = '10' # '国家代码    
       item['STKCODE'] = '000100'   # '证券代码',
-      item['STKNAME'] = hxs.select('//div[1]/div/ul/li[1]/a/text()').extract()
+      item['STKNAME'] = hxs.select('//div[1]/div/ul/li[1]/a/text()').extract().decode("gbk").encode("utf-8")
       item['CONAME'] = ''  #'公司名称',
       item['INDCODE'] = ''  # '行业代码A',
       item['INDNAME'] = ''  # '行业名称A',
